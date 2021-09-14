@@ -1,22 +1,44 @@
-﻿<Window x:Class="UPaT.MainWindow"
+﻿<Window x:Name="WindowMain" x:Class="UPaT.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:UPaT"
         mc:Ignorable="d"
-        Title="Unreal Pak Tool" Height="450" Width="800" ResizeMode="NoResize" Closed="Window_Closed">
+        Title="UPaT" Height="450" Width="800" ResizeMode="NoResize" Closed="Window_Closed" WindowStartupLocation="CenterScreen">
     <Grid>
-        <Grid>
-            <TextBlock x:Name="UnrealPakLocation" HorizontalAlignment="Left" Margin="10,10,0,0" Text="TextBlock" TextWrapping="Wrap" VerticalAlignment="Top"/>
+        <Menu Width="Auto" DockPanel.Dock="Top" Height="20" VerticalAlignment="Top">
+            <MenuItem x:Name="GitHubLinkBTN" Header="Github" Click="GitHubLinkBTN_Click" />
+        </Menu>
+        <Grid Height="19" VerticalAlignment="Top" Margin="0,25,0,0">
+            <TextBlock HorizontalAlignment="Left" Margin="16,0,0,0" Text="Unreal Version" TextWrapping="Wrap" Width="115" VerticalAlignment="Center" TextAlignment="Right">
+                <TextBlock.ToolTip>
+                    <TextBlock>
+                    Select the UnrealPak version by the version of UE it's packaged with.
+                    <LineBreak />
+                    You should be fine using the latest but this is here if, for some reason, you have problems with later Unreal Pak versions.
+                    <LineBreak/>
+                    For best compatibility, select the version of Unreal your targeted game is built with.
+                    </TextBlock>
+                </TextBlock.ToolTip>
+            </TextBlock>
+            <ComboBox x:Name="UnrealVersionSelectorDropdown" HorizontalAlignment="Left" Margin="136,0,0,0" VerticalAlignment="Center" Width="120" SelectionChanged="UnrealVersionSelectorDropdown_SelectionChanged"/>
+
         </Grid>
-        <Grid Margin="10,49,10,0" Height="20" VerticalAlignment="Top">
-            <TextBox x:Name="ChosenPakFile" Text="TextBox" TextWrapping="NoWrap" Margin="0,0,115,0"/>
-            <Button x:Name="BrowseForPakButton" Content="Browse" Click="BrowseForPakButton_Click" HorizontalAlignment="Right" Width="110"/>
+        <Grid Margin="10,50,10,0" Height="35" VerticalAlignment="Top">
+            <Label Content="Unreal Pak (UnrealPak.exe)" HorizontalAlignment="Center" Margin="0,-1,0,0" VerticalAlignment="Top" Height="19" Width="550" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" ScrollViewer.VerticalScrollBarVisibility="Visible" Padding="0,0,0,0" Grid.Row="1"/>
+            <TextBox x:Name="ChosenUnrealPakExeFile" TextWrapping="NoWrap" Margin="0,18,115,0" Grid.Column="1"/>
+            <Button x:Name="BrowseForUnrealPakExeButton" Content="Browse" Click="BrowseForUnrealPakExeButton_Click" HorizontalAlignment="Right" Width="110" Grid.RowSpan="2" Grid.Column="1"/>
+        </Grid>
+        <Grid Margin="10,97,10,0" Height="35" VerticalAlignment="Top">
+            <Label Content="Game Pak File" HorizontalAlignment="Center" Margin="0,-1,0,0" VerticalAlignment="Top" Height="19" Width="550" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" ScrollViewer.VerticalScrollBarVisibility="Visible" Padding="0,0,0,0" Grid.Row="1"/>
+            <TextBox x:Name="ChosenPakFile" TextWrapping="NoWrap" Margin="0,18,115,0" Grid.Column="1"/>
+            <Button x:Name="BrowseForPakButton" Content="Browse" Click="BrowseForPakButton_Click" HorizontalAlignment="Right" Width="110" Grid.RowSpan="2" Grid.Column="1"/>
         </Grid>
 
-        <Grid Margin="10,0,10,130" Height="20" VerticalAlignment="Bottom">
-            <TextBox x:Name="OutputFolderText" Text="TextBox" TextWrapping="NoWrap" Margin="0,0,115,0"/>
+        <Grid Margin="10,0,10,130" Height="35" VerticalAlignment="Bottom">
+            <Label Content="Output Directory" HorizontalAlignment="Center" Margin="0,-1,0,0" VerticalAlignment="Top" Height="19" Width="550" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" ScrollViewer.VerticalScrollBarVisibility="Visible" Padding="0,0,0,0"/>
+            <TextBox x:Name="OutputFolderText" TextWrapping="NoWrap" Margin="0,18,115,0"/>
             <Button x:Name="BrowseForOutputFolder" Content="Browse" Click="BrowseForOutputFolder_Click" HorizontalAlignment="Right" Width="110"/>
         </Grid>
 
@@ -24,7 +46,5 @@
             <TextBox x:Name="CMDOutputText" TextWrapping="Wrap" IsReadOnly="True" AutoWordSelection="True" FontWeight="Light" FontSize="11" Margin="0,0,115,0"/>
             <Button x:Name="ExtractButton" Content="Extract" FontSize="16" Click="ExtractButton_Click" HorizontalAlignment="Right" Width="110"/>
         </Grid>
-
-
     </Grid>
 </Window>

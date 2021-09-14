@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 
 namespace UPaT
@@ -13,18 +14,30 @@ namespace UPaT
 
         public string SelectedUnrealPakExe { get; set; }
 
+        public bool UPT_IsRunning { get {
+                //Hopefully this is working
+                return (System.Diagnostics.Process.GetProcessesByName("UnrealPak").Length > 0);
+            }
+            
+        }
+
         string BaseUnrealEngineLocation = "C:\\Program Files\\Epic Games";
 
         public delegate void CMDUnrealPakOutput(string Output);
         public CMDUnrealPakOutput UPOutput;
 
         public System.Diagnostics.Process proc = new System.Diagnostics.Process();
-        public string GetUnrealPakLocation()
+
+        public List<string> FoundUpakExeLocations;
+
+        public List<string> GetUnrealPakLocation()
         {
             string[] locations = Directory.GetFiles(BaseUnrealEngineLocation, "UnrealPak.exe", SearchOption.AllDirectories);
 
-            SelectedUnrealPakExe = locations[1];
-            return locations[1];
+            FoundUpakExeLocations = locations.ToList<string>();
+
+            //SelectedUnrealPakExe = locations[1];
+            return FoundUpakExeLocations;
         }
 
         public bool UnpackUnrealPak()
@@ -39,7 +52,7 @@ namespace UPaT
             procInfo.UseShellExecute = false;
 
             procInfo.CreateNoWindow = true;
-
+            
             proc.StartInfo = procInfo;
 
             proc.OutputDataReceived += new System.Diagnostics.DataReceivedEventHandler((sender, e) => {
